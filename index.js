@@ -31,3 +31,29 @@ function displayBooks(arrayBook) {
   }
   mylibrary.splice(0, mylibrary.length);
 }
+
+document.querySelector(".appearForm").addEventListener("click", function () {
+  if (document.querySelector(".form").childNodes.length === 0) {
+    const inputBookName = document.createElement("input");
+    const inputBookAuthor = document.createElement("input");
+    const inputBookPages = document.createElement("input");
+    const inputFalseButton = document.createElement("input");
+    const inputTrueButton = document.createElement("input");
+    const inputSubmit = document.createElement("input");
+    inputBookName.type = "text";
+    inputBookAuthor.type = "text";
+    inputBookPages.type = "number";
+    inputFalseButton.type = "radio";
+    inputFalseButton.name = "true_falseInput";
+    inputTrueButton.type = "radio";
+    inputTrueButton.name = "true_falseInput";
+    inputSubmit.type = "submit";
+    inputSubmit.classList.add("submit_form");
+    document.querySelector(".form").appendChild(inputBookName);
+    document.querySelector(".form").appendChild(inputBookAuthor);
+    document.querySelector(".form").appendChild(inputBookPages);
+    document.querySelector(".form").appendChild(inputFalseButton);
+    document.querySelector(".form").appendChild(inputTrueButton);
+    document.querySelector(".form").appendChild(inputSubmit);
+  }
+});
