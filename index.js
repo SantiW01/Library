@@ -9,6 +9,7 @@ function Book(name, author, pages, alreadyRead) {
 
 function addBookToLibrary(book) {
   mylibrary.push(book);
+  displayBooks(mylibrary);
 }
 
 function displayBooks(arrayBook) {
@@ -40,20 +41,53 @@ document.querySelector(".appearForm").addEventListener("click", function () {
     const inputFalseButton = document.createElement("input");
     const inputTrueButton = document.createElement("input");
     const inputSubmit = document.createElement("input");
+    const falseLabel = document.createElement("label");
+    const trueLabel = document.createElement("label");
     inputBookName.type = "text";
+    inputBookName.setAttribute("id", "book_name");
+    inputBookName.setAttribute("placeholder", "Enter book name");
     inputBookAuthor.type = "text";
+    inputBookAuthor.setAttribute("id", "book_author");
+    inputBookAuthor.setAttribute("placeholder", "Enter book author");
     inputBookPages.type = "number";
+    inputBookPages.setAttribute("id", "book_pages");
+    inputBookPages.setAttribute("placeholder", "How many page does have?");
     inputFalseButton.type = "radio";
     inputFalseButton.name = "true_falseInput";
+    inputFalseButton.value = "False";
     inputTrueButton.type = "radio";
     inputTrueButton.name = "true_falseInput";
+    inputTrueButton.value = "True";
+    falseLabel.innerText = "False";
+    trueLabel.innerText = "True";
     inputSubmit.type = "submit";
     inputSubmit.classList.add("submit_form");
     document.querySelector(".form").appendChild(inputBookName);
     document.querySelector(".form").appendChild(inputBookAuthor);
     document.querySelector(".form").appendChild(inputBookPages);
+    document.querySelector(".form").appendChild(falseLabel);
     document.querySelector(".form").appendChild(inputFalseButton);
+    document.querySelector(".form").appendChild(trueLabel);
     document.querySelector(".form").appendChild(inputTrueButton);
     document.querySelector(".form").appendChild(inputSubmit);
+    document
+      .querySelector(".submit_form")
+      .addEventListener("click", SubmitForm());
   }
 });
+
+function SubmitForm() {
+  let newBook;
+  document.querySelector(".submit_form").addEventListener("click", function () {
+    let bookName = document.querySelector("#book_name").value;
+    let bookAuthor = document.querySelector("#book_author").value;
+    let bookPages = document.querySelector("#book_pages").value;
+    let alreadyRead = document.getElementsByName("true_falseInput");
+    for (let radio of alreadyRead) {
+      if (radio.checked) {
+        newBook = new Book(bookName, bookAuthor, bookPages, radio.value);
+      }
+    }
+    addBookToLibrary(newBook);
+  });
+}
