@@ -105,7 +105,7 @@ function changeReadStatus() {
     button.innerHTML = "True";
     button.classList.add("read_button");
     button.classList.remove("notRead_button");
-  } else {
+  } else if (button.innerHTML == "True") {
     button.innerHTML = "False";
     button.classList.remove("read_button");
     button.classList.add("notRead_button");
