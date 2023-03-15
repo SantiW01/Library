@@ -1,4 +1,5 @@
 let mylibrary = [];
+const button = document.createElement("button");
 
 function Book(name, author, pages, alreadyRead) {
   this.name = name;
@@ -18,7 +19,7 @@ function displayBooks(arrayBook) {
     const newTr = document.createElement("tr");
     table.appendChild(newTr);
     const thName = document.createElement("th");
-    thName.innerHTML = `${arrayBook[i].author}`;
+    thName.innerHTML = `${arrayBook[i].name}`;
     newTr.appendChild(thName);
     const thAuthor = document.createElement("th");
     thAuthor.innerHTML = `${arrayBook[i].author}`;
@@ -27,8 +28,15 @@ function displayBooks(arrayBook) {
     thPages.innerHTML = `${arrayBook[i].pages}`;
     newTr.appendChild(thPages);
     const thRead = document.createElement("th");
-    thRead.innerHTML = `${arrayBook[i].alreadyRead}`;
+    button.setAttribute("class", "read_status");
+    button.innerHTML = `${arrayBook[i].alreadyRead}`;
+    thRead.appendChild(button);
     newTr.appendChild(thRead);
+    document
+      .querySelector(".read_status")
+      .addEventListener("click", function () {
+        changeReadStatus();
+      });
   }
   mylibrary.splice(0, mylibrary.length);
 }
@@ -90,4 +98,16 @@ function SubmitForm() {
     }
     addBookToLibrary(newBook);
   });
+}
+
+function changeReadStatus() {
+  if (button.innerHTML == "False") {
+    button.innerHTML = "True";
+    button.classList.add("read_button");
+    button.classList.remove("notRead_button");
+  } else {
+    button.innerHTML = "False";
+    button.classList.remove("read_button");
+    button.classList.add("notRead_button");
+  }
 }
