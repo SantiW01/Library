@@ -1,6 +1,9 @@
 let mylibrary = [];
-const button = document.createElement("button");
-
+const table = document.querySelector("tbody");
+const div = document.createElement("div");
+div.setAttribute("class", "information_group");
+table.appendChild(div);
+div.appendChild(document.querySelector(".table_header"));
 function Book(name, author, pages, alreadyRead) {
   this.name = name;
   this.author = author;
@@ -10,37 +13,40 @@ function Book(name, author, pages, alreadyRead) {
 
 function addBookToLibrary(book) {
   mylibrary.push(book);
+  console.log(mylibrary);
   displayBooks(mylibrary);
 }
 
 function displayBooks(arrayBook) {
-  const table = document.querySelector("tbody");
-  for (let i = 0; i < arrayBook.length; i++) {
-    const newTr = document.createElement("tr");
-    table.appendChild(newTr);
-    const thName = document.createElement("th");
-    thName.innerHTML = `${arrayBook[i].name}`;
-    newTr.appendChild(thName);
-    const thAuthor = document.createElement("th");
-    thAuthor.innerHTML = `${arrayBook[i].author}`;
-    newTr.appendChild(thAuthor);
-    const thPages = document.createElement("th");
-    thPages.innerHTML = `${arrayBook[i].pages}`;
-    newTr.appendChild(thPages);
-    const thRead = document.createElement("th");
-    button.setAttribute("class", "read_status");
-    button.innerHTML = `${arrayBook[i].alreadyRead}`;
-    thRead.appendChild(button);
-    newTr.appendChild(thRead);
-    document
-      .querySelector(".read_status")
-      .addEventListener("click", function () {
-        changeReadStatus();
-      });
-  }
-  mylibrary.splice(0, mylibrary.length);
+  const newTr = document.createElement("tr");
+  newTr.setAttribute("id", "information");
+  div.appendChild(newTr);
+  const thName = document.createElement("th");
+  newTr.appendChild(thName);
+  const thAuthor = document.createElement("th");
+  newTr.appendChild(thAuthor);
+  const thPages = document.createElement("th");
+  newTr.appendChild(thPages);
+  const thRead = document.createElement("th");
+  const button = document.createElement("button");
+  button.setAttribute("class", `read_status`);
+  thRead.appendChild(button);
+  newTr.appendChild(thRead);
+  const thRemove = document.createElement("th");
+  newTr.appendChild(thRemove);
+  const removeButton = document.createElement("button");
+  removeButton.innerHTML = "Remove";
+  thRemove.append(removeButton);
+  document.querySelector(".read_status").addEventListener("click", function () {
+    changeReadStatus();
+  });
+  arrayBook.map((element) => {
+    thName.innerHTML = `${element.name}`;
+    thAuthor.innerHTML = `${element.author}`;
+    thPages.innerHTML = `${element.pages}`;
+    button.innerHTML = `${element.alreadyRead}`;
+  });
 }
-
 document.querySelector(".appearForm").addEventListener("click", function () {
   if (document.querySelector(".form").childNodes.length === 0) {
     const inputBookName = document.createElement("input");
@@ -101,13 +107,17 @@ function SubmitForm() {
 }
 
 function changeReadStatus() {
-  if (button.innerHTML == "False") {
-    button.innerHTML = "True";
-    button.classList.add("read_button");
-    button.classList.remove("notRead_button");
-  } else if (button.innerHTML == "True") {
-    button.innerHTML = "False";
-    button.classList.remove("read_button");
-    button.classList.add("notRead_button");
+  if (document.querySelector(".read_status").innerHTML == "False") {
+    document.querySelector(".read_status").innerHTML = "True";
+    document.querySelector(".read_status").classList.add("read_button");
+    document.querySelector(".read_status").classList.remove("notRead_button");
+  } else if (document.querySelector(".read_status").innerHTML == "True") {
+    document.querySelector(".read_status").innerHTML = "False";
+    document.querySelector(".read_status").classList.remove("read_button");
+    document.querySelector(".read_status").classList.add("notRead_button");
   }
+}
+
+function DeleteBookInformation() {
+  document.querySelector(".information_group > .information").remove();
 }
