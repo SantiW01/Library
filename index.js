@@ -13,7 +13,6 @@ function Book(name, author, pages, alreadyRead) {
 
 function addBookToLibrary(book) {
   mylibrary.push(book);
-  console.log(mylibrary);
   displayBooks(mylibrary);
 }
 
@@ -29,7 +28,6 @@ function displayBooks(arrayBook) {
   newTr.appendChild(thPages);
   const thRead = document.createElement("th");
   const button = document.createElement("button");
-  button.setAttribute("class", `read_status`);
   thRead.appendChild(button);
   newTr.appendChild(thRead);
   const thRemove = document.createElement("th");
@@ -37,9 +35,18 @@ function displayBooks(arrayBook) {
   const removeButton = document.createElement("button");
   removeButton.innerHTML = "Remove";
   thRemove.append(removeButton);
-  document.querySelector(".read_status").addEventListener("click", function () {
-    changeReadStatus();
-  });
+  removeButton.setAttribute("class", `remove_button`);
+  button.setAttribute("class", `read_status`);
+  document.querySelectorAll(".read_status").forEach((e) =>
+    e.addEventListener("click", function () {
+      changeReadStatus();
+    })
+  );
+  document.querySelectorAll(".remove_button").forEach((e) =>
+    e.addEventListener("click", function () {
+      removeBook(arrayBook);
+    })
+  );
   arrayBook.map((element) => {
     thName.innerHTML = `${element.name}`;
     thAuthor.innerHTML = `${element.author}`;
@@ -120,4 +127,8 @@ function changeReadStatus() {
 
 function DeleteBookInformation() {
   document.querySelector(".information_group > .information").remove();
+}
+
+function removeBook(mylibrary) {
+  mylibrary.filter((i) => (i == i ? console.log(i) : ""));
 }
