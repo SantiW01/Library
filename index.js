@@ -40,6 +40,16 @@ function displayBooks(arrayBook) {
   removeButton.textContent = "Remove";
   thRemove.append(removeButton);
   removeButton.setAttribute("class", `remove_button`);
+  removeButton.addEventListener("click", (e) => {
+    removeBook(e.target.parentNode.parentNode);
+  });
+  arrayBook.map((element, i) => {
+    thName.textContent = `${element.name}`;
+    thAuthor.textContent = `${element.author}`;
+    thPages.textContent = `${element.pages}`;
+    readStatus.textContent = `${element.alreadyRead}`;
+    newTr.setAttribute("indice", `${i}`);
+  });
 }
 document.querySelector(".appearForm").addEventListener("click", function () {
   if (document.querySelector(".form").childNodes.length === 0) {
