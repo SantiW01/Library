@@ -1,4 +1,4 @@
-let mylibrary = [];
+const mylibrary = [];
 const table = document.querySelector("tbody");
 const div = document.createElement("div");
 div.setAttribute("class", "information_group");
@@ -27,32 +27,19 @@ function displayBooks(arrayBook) {
   const thPages = document.createElement("th");
   newTr.appendChild(thPages);
   const thRead = document.createElement("th");
-  const button = document.createElement("button");
-  thRead.appendChild(button);
+  const readStatus = document.createElement("button");
+  readStatus.setAttribute("class", `read_status`);
+  readStatus.addEventListener("click", (e) => {
+    changeReadStatus(e.target);
+  });
+  thRead.appendChild(readStatus);
   newTr.appendChild(thRead);
   const thRemove = document.createElement("th");
   newTr.appendChild(thRemove);
   const removeButton = document.createElement("button");
-  removeButton.innerHTML = "Remove";
+  removeButton.textContent = "Remove";
   thRemove.append(removeButton);
   removeButton.setAttribute("class", `remove_button`);
-  button.setAttribute("class", `read_status`);
-  document.querySelectorAll(".read_status").forEach((e) =>
-    e.addEventListener("click", function () {
-      changeReadStatus();
-    })
-  );
-  document.querySelectorAll(".remove_button").forEach((e) =>
-    e.addEventListener("click", function () {
-      removeBook(arrayBook);
-    })
-  );
-  arrayBook.map((element) => {
-    thName.innerHTML = `${element.name}`;
-    thAuthor.innerHTML = `${element.author}`;
-    thPages.innerHTML = `${element.pages}`;
-    button.innerHTML = `${element.alreadyRead}`;
-  });
 }
 document.querySelector(".appearForm").addEventListener("click", function () {
   if (document.querySelector(".form").childNodes.length === 0) {
@@ -113,22 +100,18 @@ function SubmitForm() {
   });
 }
 
-function changeReadStatus() {
-  if (document.querySelector(".read_status").innerHTML == "False") {
-    document.querySelector(".read_status").innerHTML = "True";
-    document.querySelector(".read_status").classList.add("read_button");
-    document.querySelector(".read_status").classList.remove("notRead_button");
-  } else if (document.querySelector(".read_status").innerHTML == "True") {
-    document.querySelector(".read_status").innerHTML = "False";
-    document.querySelector(".read_status").classList.remove("read_button");
-    document.querySelector(".read_status").classList.add("notRead_button");
+function changeReadStatus(e) {
+  if (e.textContent == "False") {
+    e.textContent = "True";
+    e.classList.add("read");
+    e.classList.remove("unread");
+  } else if (e.textContent == "True") {
+    e.textContent = "False";
+    e.classList.add("unread");
+    e.classList.remove("read");
   }
 }
 
 function DeleteBookInformation() {
   document.querySelector(".information_group > .information").remove();
-}
-
-function removeBook(mylibrary) {
-  mylibrary.filter((i) => (i == i ? console.log(i) : ""));
 }
