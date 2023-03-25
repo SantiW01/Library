@@ -1,9 +1,5 @@
-const mylibrary = [];
-const table = document.querySelector("tbody");
+let mylibrary = [];
 const div = document.createElement("div");
-div.setAttribute("class", "information_group");
-table.appendChild(div);
-div.appendChild(document.querySelector(".table_header"));
 function Book(name, author, pages, alreadyRead) {
   this.name = name;
   this.author = author;
@@ -13,10 +9,16 @@ function Book(name, author, pages, alreadyRead) {
 
 function addBookToLibrary(book) {
   mylibrary.push(book);
-  displayBooks(mylibrary);
+  console.log(mylibrary);
+  displayBooks();
 }
 
-function displayBooks(arrayBook) {
+function displayBooks() {
+  div.replaceChildren();
+  const table = document.querySelector("tbody");
+  div.setAttribute("class", "information_group");
+  table.appendChild(div);
+  div.appendChild(document.querySelector(".table_header"));
   const newTr = document.createElement("tr");
   newTr.setAttribute("id", "information");
   div.appendChild(newTr);
@@ -41,14 +43,13 @@ function displayBooks(arrayBook) {
   thRemove.append(removeButton);
   removeButton.setAttribute("class", `remove_button`);
   removeButton.addEventListener("click", (e) => {
-    removeBook(e.target.parentNode.parentNode);
+    removeBook(e);
   });
-  arrayBook.map((element, i) => {
+  mylibrary.forEach((element, i) => {
     thName.textContent = `${element.name}`;
     thAuthor.textContent = `${element.author}`;
     thPages.textContent = `${element.pages}`;
     readStatus.textContent = `${element.alreadyRead}`;
-    newTr.setAttribute("indice", `${i}`);
   });
 }
 document.querySelector(".appearForm").addEventListener("click", function () {
@@ -122,6 +123,10 @@ function changeReadStatus(e) {
   }
 }
 
-function DeleteBookInformation() {
-  document.querySelector(".information_group > .information").remove();
+function removeBook(e) {
+  if (mylibrary.length > 0) {
+    mylibrary.splice(e, 1);
+    //document.querySelector(".information_group").removeChild(e);
+    displayBooks();
+  }
 }
