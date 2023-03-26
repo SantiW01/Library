@@ -120,14 +120,6 @@ function changeReadStatus(e) {
   }
 }
 
-/*function removeBook(e) {
-  if (mylibrary.length > 0) {
-    mylibrary.splice(e, 1);
-    console.log(e);
-    //document.querySelector("table").remove(e.parentNode.rowIndex);
-  }
-}*/
-
 function deleteRow(el) {
   if (mylibrary.length > 0) {
     mylibrary.splice(el, 1);
