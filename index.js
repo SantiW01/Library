@@ -73,17 +73,13 @@ function SubmitForm() {
     let readOrNot = undefined;
     if (alreadyRead[0].checked) {
       readOrNot = alreadyRead[0].defaultValue;
+      console.log((readOrNot = alreadyRead[0].defaultValue));
     } else if (alreadyRead[1].checked) {
       readOrNot = alreadyRead[1].defaultValue;
     }
     //si la variable fue chequeada se crea el libro y se agrega a la biblioteca
     if (readOrNot != undefined) {
-      const newBook = new Book(
-        bookName,
-        bookAuthor,
-        bookPages,
-        alreadyRead[0].checked || alreadyRead[1].checked
-      );
+      const newBook = new Book(bookName, bookAuthor, bookPages, readOrNot);
       addBookToLibrary(newBook);
     } else {
       console.log("must check if read or not first");
@@ -92,12 +88,12 @@ function SubmitForm() {
 }
 //no andaba porque había un error entre el False y True con mayúsculas acá y con minúsculas en el elemento
 function changeReadStatus(e) {
-  if (e.textContent == "false") {
-    e.textContent = "true";
+  if (e.textContent == "False") {
+    e.textContent = "True";
     e.classList.add("read");
     e.classList.remove("unread");
-  } else if (e.textContent == "true") {
-    e.textContent = "false";
+  } else if (e.textContent == "True") {
+    e.textContent = "False";
     e.classList.add("unread");
     e.classList.remove("read");
   }
