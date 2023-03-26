@@ -1,5 +1,5 @@
 let mylibrary = [];
-const div = document.createElement("div");
+const table = document.querySelector("tbody");
 function Book(name, author, pages, alreadyRead) {
   this.name = name;
   this.author = author;
@@ -14,21 +14,16 @@ function addBookToLibrary(book) {
 }
 
 function displayBooks() {
-  div.replaceChildren();
-  const table = document.querySelector("tbody");
-  div.setAttribute("class", "information_group");
-  table.appendChild(div);
-  div.appendChild(document.querySelector(".table_header"));
   const newTr = document.createElement("tr");
   newTr.setAttribute("id", "information");
-  div.appendChild(newTr);
-  const thName = document.createElement("th");
+  table.appendChild(newTr);
+  const thName = document.createElement("td");
   newTr.appendChild(thName);
-  const thAuthor = document.createElement("th");
+  const thAuthor = document.createElement("td");
   newTr.appendChild(thAuthor);
-  const thPages = document.createElement("th");
+  const thPages = document.createElement("td");
   newTr.appendChild(thPages);
-  const thRead = document.createElement("th");
+  const thRead = document.createElement("td");
   const readStatus = document.createElement("button");
   readStatus.setAttribute("class", `read_status`);
   readStatus.addEventListener("click", (e) => {
@@ -36,15 +31,17 @@ function displayBooks() {
   });
   thRead.appendChild(readStatus);
   newTr.appendChild(thRead);
-  const thRemove = document.createElement("th");
+  const thRemove = document.createElement("td");
   newTr.appendChild(thRemove);
   const removeButton = document.createElement("button");
+  removeButton.type = "button";
   removeButton.textContent = "Remove";
   thRemove.append(removeButton);
   removeButton.setAttribute("class", `remove_button`);
-  removeButton.addEventListener("click", (e) => {
+  removeButton.setAttribute("onclick", "deleteRow(this);");
+  /*removeButton.addEventListener("click", (e) => {
     removeBook(e);
-  });
+  });*/
   mylibrary.forEach((element, i) => {
     thName.textContent = `${element.name}`;
     thAuthor.textContent = `${element.author}`;
@@ -123,10 +120,19 @@ function changeReadStatus(e) {
   }
 }
 
-function removeBook(e) {
+/*function removeBook(e) {
   if (mylibrary.length > 0) {
     mylibrary.splice(e, 1);
-    //document.querySelector(".information_group").removeChild(e);
-    displayBooks();
+    console.log(e);
+    //document.querySelector("table").remove(e.parentNode.rowIndex);
+  }
+}*/
+
+function deleteRow(el) {
+  if (mylibrary.length > 0) {
+    mylibrary.splice(el, 1);
+    let tbl = el.parentNode.parentNode.parentNode.parentNode;
+    let row = el.parentNode.parentNode.rowIndex;
+    tbl.deleteRow(row);
   }
 }
